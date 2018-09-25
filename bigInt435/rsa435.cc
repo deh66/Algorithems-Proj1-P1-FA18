@@ -13,6 +13,15 @@
 // 'BigIntegerLibrary.hh' includes all of the library headers.
 #include "BigIntegerLibrary.hh"
 
+// NOTES TO DAN //
+//Part I : RSA key generation.
+//	Implement Fermat test;
+//	Use Fermat’s test to generate two large prime numbers(p, q), each should have a size >= 512 bits;
+//	Save p and q in a file named p_q.txt, one integer per line and making sure no white space saved;
+//	Use extended Euclidean algorithm to generate two pairs of keys : (e, n), (d, n), where n = p * q;
+//	Save the two pairs of keys in two separate files : e_n.txt and d_n.txt, one integer per line and no white space;
+//              //
+
 int main(){
 	/* The library throws 'const char *' error messages when things go
 	 * wrong.  It's a good idea to catch them using a 'try' block like this
