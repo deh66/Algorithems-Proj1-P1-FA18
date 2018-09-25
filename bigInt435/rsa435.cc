@@ -26,7 +26,7 @@
 //              //
 
 bool fermatTest(BigUnsigned&);
-BigUnsigned generateBigPrime(BigUnsigned const &);
+void generateBigPrime(BigUnsigned const &);
 
 bool block = true;
 
@@ -35,31 +35,6 @@ int main(){
 	 * wrong.  It's a good idea to catch them using a 'try' block like this
 	 * one.  Your C++ compiler might need a command-line option to compile
 	 * code that uses exceptions. */
-	/*try {
-		      
-      std::cout << "a couple of test cases for 3460:435/535 Algorithms!!!\n";
-      BigUnsigned big1 = BigUnsigned(1);
-      for (int i=0;i<400;i++) {
-         big1 = big1*10 +rand();
-      }
-      std::cout << "my big1 !!!\n";
-      std::cout << big1;
-      BigUnsigned big2 = BigUnsigned(1);
-      for (int i=0;i<400;i++) {
-         big2 = big2*10 +rand();
-      }
-      std::cout << "my big2 !!!\n";
-      std::cout << big2;
-	  std::cout << "my big3 = big1*big2 !!!\n";
-      BigUnsigned big3 = big1*big2;
-      std::cout <<big3;
-      std::cout << "my big3/big2 !!!\n";
-      std::cout <<big3/big2;
-      
-	} catch(char const* err) {
-		std::cout << "The library threw an exception:\n"
-			<< err << std::endl;
-	}*/
 
 	/// My Code ///
 	// Generate 2 Big numbers ( 512 Bits or greater )
@@ -67,58 +42,7 @@ int main(){
 	BigUnsigned q;
 	BigUnsigned temp;
 
-	/// FERMAT TEST CODE ///
-	// 2, 3, 5, 7, 11, 13, 17, 19, 23 and 29.
-	/*fermatTest(3);
-	fermatTest(5);
-	fermatTest(7);
-	fermatTest(11);
-	fermatTest(13);
-	fermatTest(17);
-	fermatTest(19);
-	fermatTest(23);
-	fermatTest(29);*/
-	/// //////////////// ///
-
-	//while (temp.bitLength() < 512)
-	//	temp = temp * 10 + rand();	// Initalize temp;
-
-	//// Test for Primality
-	//while (!fermatTest(temp))
-	//{
-	//	std::cout << "regenerating temp\n";
-	//	// Not a prime number 
-	//	// Generate new number
-	//	temp = 0;
-	//	while (temp.bitLength() < 512)//512
-	//		temp = temp * 10 + rand();
-	//}
-
-	//// Assign new large prime number to p
-	//p = temp;
-	//std::cout << "p complete\n";
-	////std::cout << "p= " << p << std::endl;
-
-	//// Generate second large prime number
-	//temp = 0;
-	//while (temp.bitLength() < 512)
-	//	temp = temp * 10 + rand();	// Initalize temp
-
-	//// Test for Primality
-	//while (!fermatTest(temp))
-	//{
-	//	// Not a prime number 
-	//	// Generate new number
-	//	temp = 0;
-	//	while (temp.bitLength() < 512)//512
-	//		temp = temp * 10 + rand();
-	//}
-
-	//// Assign second new large prime number to q
-	//q = temp;
-
-	
-	// Threading Code
+	// Generate two large prime numbers (p, q)
 	std::thread genOne(generateBigPrime, std::ref(p));
 	std::thread genTwo(generateBigPrime, std::ref(q));
 	
@@ -189,8 +113,7 @@ int main(){
 }
 
 // Function that allows BigPrime Generation to be threaded
-//(std::promise <BigUnsigned> && p1)
-BigUnsigned generateBigPrime(BigUnsigned const & output)
+void generateBigPrime(BigUnsigned const & output)
 {
 	BigUnsigned & temp = const_cast<BigUnsigned &>(output);
 	
@@ -202,21 +125,20 @@ BigUnsigned generateBigPrime(BigUnsigned const & output)
 	{
 		// Not a prime number 
 		// Generate new number
-		temp = 0;
-		while (temp.bitLength() < 512) //512
+		temp = rand();
+		while (temp.bitLength() < 512)
 			temp = temp * 10 + rand();
 	}
 
 	std::cout << "Thread Complete\n";
 
-	return temp;
+	return;
 }
 
 // A function implementing the Fermat Primality Test
 bool fermatTest(BigUnsigned& BigIn)
 {
 	int rep = 3;					// Number of times to run test (more iterations make false positives less likely)
-	int rnd;
 	BigUnsigned a;
 
 	// Perform test multiple times
@@ -232,14 +154,12 @@ bool fermatTest(BigUnsigned& BigIn)
 		// Test if a^(n-1) % n == 1
 		if (modexp(a, BigIn - 1, BigIn) != 1)
 		{
-			//std::cout << "Fermat Failure \n";
 			return false;
 		}
 
-		rnd = 0;
 		rep--;
 	}
 
-	std::cout << "Fermat Success: " << BigIn << " is Prime\n";
+	//std::cout << "Fermat Success: " << BigIn << " is Prime\n";
 	return true;
 }
