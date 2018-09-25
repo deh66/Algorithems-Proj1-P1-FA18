@@ -33,12 +33,6 @@
     <ClCompile Include="..\bigInt435\rsa435.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\bigInt435\sample.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bigInt435\testsuite.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\bigInt435\BigInteger.hh">

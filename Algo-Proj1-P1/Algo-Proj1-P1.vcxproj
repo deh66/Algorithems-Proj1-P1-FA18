@@ -121,8 +121,6 @@
     <ClCompile Include="..\bigInt435\BigUnsigned.cc" />
     <ClCompile Include="..\bigInt435\BigUnsignedInABase.cc" />
     <ClCompile Include="..\bigInt435\rsa435.cc" />
-    <ClCompile Include="..\bigInt435\sample.cc" />
-    <ClCompile Include="..\bigInt435\testsuite.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\bigInt435\BigInteger.hh" />
