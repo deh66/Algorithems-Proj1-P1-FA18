@@ -58,7 +58,7 @@ $(program-objects) : $(library-headers)
 
 # How to link the program.  The implicit rule covers individual objects.
 $(program) : $(program-objects) $(library-objects)
-	g++ $^ -o $@
+	g++ $^ -o $@ -pthread
 
 # Delete all generated files we know about.
 clean :
