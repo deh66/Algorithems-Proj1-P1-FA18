@@ -20,6 +20,13 @@ library-headers = \
 	BigIntegerAlgorithms.hh \
 	BigUnsignedInABase.hh \
 	BigIntegerLibrary.hh \
+	
+#DAN - is this how this works?
+generated-files = \
+	p_q.txt \
+	d_n.txt \
+	e_n.txt \
+	test.txt.signature \
 
 # To ``make the library'', make all its objects using the implicit rule.
 library: $(library-objects)
@@ -63,7 +70,7 @@ $(program) : $(program-objects) $(library-objects)
 
 # Delete all generated files we know about.
 clean :
-	rm -f $(library-objects) $(testsuite-cleanfiles) $(program-objects) $(program)
+	rm -f $(library-objects) $(testsuite-cleanfiles) $(program-objects) $(program) $(generated-files)
 
 # I removed the *.tag dependency tracking system because it had few advantages
 # over manually entering all the dependencies.  If there were a portable,
