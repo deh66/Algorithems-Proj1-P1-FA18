@@ -26,29 +26,63 @@
 //              //
 
 bool fermatTest(BigUnsigned&);
-void generateBigPrime(BigUnsigned const &);
+//void generateBigPrime(BigUnsigned const &);
 
 int main(){
-	/* The library throws 'const char *' error messages when things go
-	 * wrong.  It's a good idea to catch them using a 'try' block like this
-	 * one.  Your C++ compiler might need a command-line option to compile
-	 * code that uses exceptions. */
+	// Set rand() function seed to current time to actually randomize key generation between program iterations
+	srand(time(NULL));
 
-	/// My Code ///
 	// Generate 2 Big numbers ( 512 Bits or greater )
 	BigUnsigned p;
 	BigUnsigned q;
 	BigUnsigned temp;
 
-	// Generate two large prime numbers (p, q)
-	std::thread genOne(generateBigPrime, std::ref(p));
-	std::thread genTwo(generateBigPrime, std::ref(q));
-	
-	genOne.join();
-	genTwo.join();
+	while (temp.bitLength() < 512)
+		temp = temp * 10 + rand();	// Initalize temp;
 
-	std::cout << "P: " << p << "\n";
-	std::cout << "Q: " << q << "\n";
+	// Test for Primality
+	while (!fermatTest(temp))
+	{
+		// Not a prime number 
+		// Generate new number
+		temp = 0;
+		while (temp.bitLength() < 512)//512
+			temp = temp * 10 +rand();
+	}
+	// Assign new large prime number to p
+	p = temp;
+
+	// Generate second large prime number
+	temp = 0;
+	while (temp.bitLength() < 512)
+		temp = temp * 100 + rand();	// Initalize temp
+
+	// Test for Primality
+	while (!fermatTest(temp))
+	{
+		// Not a prime number 
+		// Generate new number
+		temp = 0;
+		while (temp.bitLength() < 512)//512
+			temp = temp * 10 +rand();
+	}
+	// Assign second new large prime number to q
+	q = temp;
+
+	// Malfunctioning and abandoned threading code
+	//p = rand() % 10;
+	//q = rand() % 10;
+
+	//// Generate two large prime numbers (p, q)
+	//std::thread genOne(generateBigPrime, std::ref(p));
+	//std::thread genTwo(generateBigPrime, std::ref(q));
+	//
+	//genOne.join();
+	//genTwo.join();
+
+	// Output Testing //
+	/*std::cout << "P: " << p << "\n";
+	std::cout << "Q: " << q << "\n";*/
 
 
 	// Write p and q to file
@@ -65,13 +99,15 @@ int main(){
 	BigUnsigned e = rand();
 	while (e >= nPhi)
 		e = rand();
-
-	//std::cout << "e generated: " << e << "\n";
+	while (e.bitLength() < 100)
+		e = e * 10 + rand();
 
 	// Test if nPhi and e are relatively prime
 	while (gcd(nPhi, e) != 1)
 	{
 		e = rand();
+		while (e.bitLength() < 100)
+			e = e * 10 + rand();
 		while (e >= nPhi)
 			e = rand();
 	}
@@ -111,28 +147,30 @@ int main(){
 	return 0;
 }
 
-// Function that allows BigPrime Generation to be threaded
-void generateBigPrime(BigUnsigned const & output)
-{
-	BigUnsigned & temp = const_cast<BigUnsigned &>(output);
-	
-	while (temp.bitLength() < 512)
-		temp = temp * 10 + rand();	// Initalize temp;
-
-	// Test for Primality
-	while (!fermatTest(temp))
-	{
-		// Not a prime number 
-		// Generate new number
-		temp = rand();
-		while (temp.bitLength() < 512)
-			temp = temp * 10 + rand();
-	}
-
-	//std::cout << "Thread Complete\n";
-
-	return;
-}
+//// Function that allows BigPrime Generation to be threaded
+//void generateBigPrime(BigUnsigned const & output)
+//{
+//	BigUnsigned & temp = const_cast<BigUnsigned &>(output);
+//
+//	int modifier = output.toInt();
+//	
+//	while (temp.bitLength() < 512)
+//		temp = temp * modifier + rand();	// Initalize temp;
+//
+//	// Test for Primality
+//	while (!fermatTest(temp))
+//	{
+//		// Not a prime number 
+//		// Generate new number
+//		temp = rand();
+//		while (temp.bitLength() < 512)
+//			temp = temp * 10 + rand();
+//	}
+//
+//	//std::cout << "Thread Complete\n";
+//
+//	return;
+//}
 
 // A function implementing the Fermat Primality Test
 bool fermatTest(BigUnsigned& BigIn)
