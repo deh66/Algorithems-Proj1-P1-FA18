@@ -16,7 +16,6 @@
 // 'BigIntegerLibrary.hh' includes all of the library headers.
 #include "BigIntegerLibrary.hh"
 
-// NOTES TO DAN //
 //Part I : RSA key generation.
 //	Implement Fermat test; X
 //	Use Fermat’s test to generate two large prime numbers(p, q), each should have a size >= 512 bits;
@@ -29,6 +28,12 @@ bool fermatTest(BigUnsigned&);
 //void generateBigPrime(BigUnsigned const &);
 
 int main(){
+	//tmp
+	int minBitLength = 512;	// Minimum for submission: 512
+	
+	// Inform User
+	std::cout << "Program starting" << "\n";
+	
 	// Set rand() function seed to current time to actually randomize key generation between program iterations
 	srand(time(NULL));
 
@@ -37,8 +42,11 @@ int main(){
 	BigUnsigned q;
 	BigUnsigned temp;
 
-	while (temp.bitLength() < 512)
+	while (temp.bitLength() < minBitLength)
 		temp = temp * 10 + rand();	// Initalize temp;
+
+	// User feedback
+	std::cout << "Generating p and q" << "\n";
 
 	// Test for Primality
 	while (!fermatTest(temp))
@@ -46,15 +54,18 @@ int main(){
 		// Not a prime number 
 		// Generate new number
 		temp = 0;
-		while (temp.bitLength() < 512)//512
+		while (temp.bitLength() < minBitLength)//512
 			temp = temp * 10 +rand();
 	}
 	// Assign new large prime number to p
 	p = temp;
 
+	// User feedback
+	std::cout << "p generated, generating q" << "\n";
+
 	// Generate second large prime number
 	temp = 0;
-	while (temp.bitLength() < 512)
+	while (temp.bitLength() < minBitLength)
 		temp = temp * 100 + rand();	// Initalize temp
 
 	// Test for Primality
@@ -63,11 +74,14 @@ int main(){
 		// Not a prime number 
 		// Generate new number
 		temp = 0;
-		while (temp.bitLength() < 512)//512
+		while (temp.bitLength() < minBitLength)//512
 			temp = temp * 10 +rand();
 	}
 	// Assign second new large prime number to q
 	q = temp;
+
+	// User feedback
+	std::cout << "q generated" << "\n";
 
 	// Malfunctioning and abandoned threading code
 	//p = rand() % 10;
@@ -99,18 +113,22 @@ int main(){
 	BigUnsigned e = rand();
 	while (e >= nPhi)
 		e = rand();
-	while (e.bitLength() < 100)
+	while (e.bitLength() < 100)	// use minBitLength?
 		e = e * 10 + rand();
 
 	// Test if nPhi and e are relatively prime
 	while (gcd(nPhi, e) != 1)
 	{
 		e = rand();
-		while (e.bitLength() < 100)
+		while (e.bitLength() < 100)	// use minBitLength?
 			e = e * 10 + rand();
 		while (e >= nPhi)
 			e = rand();
 	}
+
+	std::cout << "e Generated" << "\n";
+	std::cout << "e: " << e << "\n";
+
 	// Generate d (multiplicative inverse of e)
 	BigUnsigned d;
 	try 
@@ -121,6 +139,9 @@ int main(){
 	{
 		std::cout << "ERROR COMPUTING MULTIPLICATIVE INVERSE OF d, FACTORS EXIST BETWEEN d AND nPhi.\n";
 	}
+
+	std::cout << "d Generated" << "\n";
+	std::cout << "d: " << d << "\n";
 
 	//std::cout << "d generated: " << d << "\n";
 
@@ -137,7 +158,7 @@ int main(){
 	eFile.close();
 	dFile.close();
 
-	std::cout << "Program Execution Complete\n";
+	std::cout << "RSA Key Generation Complete\n";
 
 	// Utility code for my IDE (keeps console from closing)
 	char hold;
