@@ -71,6 +71,10 @@ $(program) : $(program-objects) $(library-objects)
 # Delete all generated files we know about.
 clean :
 	rm -f $(library-objects) $(testsuite-cleanfiles) $(program-objects) $(program) $(generated-files)
+	
+#DAN - More testing
+cl :
+	rm -f $(generated-files)
 
 # I removed the *.tag dependency tracking system because it had few advantages
 # over manually entering all the dependencies.  If there were a portable,
