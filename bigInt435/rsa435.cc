@@ -160,10 +160,10 @@ int main(){
 
 	std::cout << "RSA Key Generation Complete\n";
 
-	// Utility code for my IDE (keeps console from closing)
-	char hold;
-	std::cout << "Enter character and press enter to complete execution (end program):\n";
-	std::cin >> hold;
+	//// Utility code for my IDE (keeps console from closing)
+	//char hold;
+	//std::cout << "Enter character and press enter to complete execution (end program):\n";
+	//std::cin >> hold;
 
 	return 0;
 }
