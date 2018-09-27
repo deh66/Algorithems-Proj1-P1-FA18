@@ -28,8 +28,6 @@
 bool fermatTest(BigUnsigned&);
 void generateBigPrime(BigUnsigned const &);
 
-bool block = true;
-
 int main(){
 	/* The library throws 'const char *' error messages when things go
 	 * wrong.  It's a good idea to catch them using a 'try' block like this
@@ -68,7 +66,7 @@ int main(){
 	while (e >= nPhi)
 		e = rand();
 
-	std::cout << "e generated: " << e << "\n";
+	//std::cout << "e generated: " << e << "\n";
 
 	// Test if nPhi and e are relatively prime
 	while (gcd(nPhi, e) != 1)
@@ -88,7 +86,7 @@ int main(){
 		std::cout << "ERROR COMPUTING MULTIPLICATIVE INVERSE OF d, FACTORS EXIST BETWEEN d AND nPhi.\n";
 	}
 
-	std::cout << "d generated: " << d << "\n";
+	//std::cout << "d generated: " << d << "\n";
 
 	// Print e and d to seperate files
 	std::fstream eFile;
@@ -103,10 +101,11 @@ int main(){
 	eFile.close();
 	dFile.close();
 
-	std::cout << "Program Execution Complete";
+	std::cout << "Program Execution Complete\n";
 
 	// Utility code for my IDE (keeps console from closing)
 	char hold;
+	std::cout << "Enter character and press enter to complete execution (end program):\n";
 	std::cin >> hold;
 
 	return 0;
@@ -130,7 +129,7 @@ void generateBigPrime(BigUnsigned const & output)
 			temp = temp * 10 + rand();
 	}
 
-	std::cout << "Thread Complete\n";
+	//std::cout << "Thread Complete\n";
 
 	return;
 }
