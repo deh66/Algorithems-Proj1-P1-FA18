@@ -81,8 +81,8 @@ int main(){
 	//genTwo.join();
 
 	// Output Testing //
-	/*std::cout << "P: " << p << "\n";
-	std::cout << "Q: " << q << "\n";*/
+	std::cout << "P: " << p << "\n";
+	std::cout << "Q: " << q << "\n";
 
 
 	// Write p and q to file
